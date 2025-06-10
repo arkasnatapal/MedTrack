@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Medicines</title>
+  <link rel="stylesheet" href="/stylesheets/see-medicines.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+  <div class="container">
+    <h1>Your Uploaded Medicines</h1>
+    
+    <input type="text" id="searchInput" placeholder="Search medicine...">
+
+    <div class="medicine-list" id="medicineList">
+      <% medicines.forEach(function(med) { %>
+        <div class="medicine-card" data-name="<%= med.name.toLowerCase() %>">
+          <img src="<%= med.imageURL %>" alt="Medicine">
+          <h2><%= med.name %></h2>
+          <p><strong>Type:</strong> <%= med.type %></p>
+          <% if(med.type === 'Tablet') { %>
+            <p><strong>Strips Left:</strong> <%= med.strips %></p>
+          <% } %>
+          <p><strong>Price:</strong> ₹<%= med.originalPrice %> → <span class="price">₹<%= med.sellingPrice %></span></p>
+          <p><strong>Category:</strong> <%= med.category %></p>
+          <p><strong>Expiry:</strong> <%= med.expiryDate.toDateString() %> 
+            <% if (new Date(med.expiryDate) < new Date()) { %>
+              <span class="expired">[Expired]</span>
+            <% } else { %>
+              <span class="valid">[Valid]</span>
+            <% } %>
+          </p>
+          <div class="actions">
+            <a href="/edit/<%= med._id %>" class="edit-btn"><i class="fas fa-edit"></i></a>
+            <form action="/delete/<%= med._id %>" method="POST" style="display:inline;">
+              <button type="submit" class="delete-btn"><i class="fas fa-trash"></i></button>
+            </form>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const medicineList = document.getElementById('medicineList');
+
+    searchInput.addEventListener('input', () => {
+      const val = searchInput.value.toLowerCase();
+      const cards = medicineList.querySelectorAll('.medicine-card');
+      cards.forEach(card => {
+        const name = card.getAttribute('data-name');
+        card.style.display = name.includes(val) ? 'block' : 'none';
+      });
+    });
+  </script>
+</body>
+</html>

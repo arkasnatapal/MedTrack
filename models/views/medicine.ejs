@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Upload Medicine</title>
+  <link rel="stylesheet" href="/stylesheets/medicine.css">
+   <link rel="icon" href="/images/logo.png" type="image/png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+   <div class="background">
+    <div class="ball glow"></div>
+    <div class="ball move"></div>
+    <div class="ball glow move"></div>
+    <div class="ball glow"></div>
+    <div class="ball move"></div>
+  </div>
+  <!-- NAVBAR (Your Original Preserved) -->
+ <nav class="navbar" id="navbar">
+    <div class="logo">Med<span>Track</span></div>
+    <ul class="nav-links">
+      <li><a href="/dashboard">Dashboard</a></li>
+      <li><a href="/medicine">Add Medicine</a></li>
+      <li><a href="/notifications">Notifications</a></li>
+      <li><a href="/register">Register/Login</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <div class="form-section">
+      <form id="medicineForm">
+        <input type="text" id="name" placeholder="Medicine Name" required>
+        <input type="text" id="type" placeholder="Type (Tablet/Syrup)" required>
+        <input type="number" id="strips" placeholder="Quantity">
+        <input type="number" id="originalPrice" placeholder="Original Price ₹" required>
+        <input type="number" id="sellingPrice" placeholder="Selling Price ₹" required>
+        <input type="text" id="category" placeholder="Category" required>
+        <input type="date" id="expiryDate" required>
+        <div class="file-upload-wrapper">
+  <label for="imageFile" class="custom-file-upload">Choose Image</label>
+  <span id="file-name">No file chosen</span>
+  <input type="file" id="imageFile" accept="image/*" required style="display: none;">
+</div>
+        <p id="expiryWarning" class="expiry-warning"></p>
+        <button type="submit">Upload</button>
+      </form>
+      <a href="/see-medicines" class="see-medicines-btn">See Your Medicines</a>
+    </div>
+
+    <div class="preview-card" id="previewCard">
+      <div class="id-card">
+        <img id="previewImage" src="" alt="Medicine Image">
+        <div class="details">
+          <h3 id="previewName">Medicine Name</h3>
+          <p><strong>Type:</strong> <span id="previewType"></span></p>
+          <p><strong>Quantity:</strong> <span id="previewStrips"></span></p>
+          <p><strong>Original:</strong> ₹<span id="previewOriginal"></span></p>
+          <p><strong>Selling:</strong> ₹<span id="previewSelling"></span></p>
+          <p><strong>Category:</strong> <span id="previewCategory"></span></p>
+          <p><strong>Expiry:</strong> <span id="previewExpiry"></span></p>
+          <p><strong>Status:</strong> <span id="expiryStatus"></span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("imageFile").addEventListener("change", function () {
+    const fileNameSpan = document.getElementById("file-name");
+    const file = this.files[0];
+    fileNameSpan.textContent = file ? file.name : "No file chosen";
+  });
+    const form = document.getElementById("medicineForm");
+    const previewCard = document.getElementById("previewCard");
+
+    const fields = {
+      name: document.getElementById("name"),
+      type: document.getElementById("type"),
+      strips: document.getElementById("strips"),
+      originalPrice: document.getElementById("originalPrice"),
+      sellingPrice: document.getElementById("sellingPrice"),
+      category: document.getElementById("category"),
+      expiryDate: document.getElementById("expiryDate"),
+      imageFile: document.getElementById("imageFile"),
+    };
+
+    const previewFields = {
+      name: document.getElementById("previewName"),
+      type: document.getElementById("previewType"),
+      strips: document.getElementById("previewStrips"),
+      original: document.getElementById("previewOriginal"),
+      selling: document.getElementById("previewSelling"),
+      category: document.getElementById("previewCategory"),
+      expiry: document.getElementById("previewExpiry"),
+      status: document.getElementById("expiryStatus"),
+      image: document.getElementById("previewImage")
+    };
+
+    const expiryWarning = document.getElementById("expiryWarning");
+
+    const updatePreview = () => {
+      const allFilled = Object.values(fields).every(field => field.value);
+
+      if (!allFilled) {
+        previewCard.classList.remove("active");
+        return;
+      }
+
+      // Fill preview fields
+      previewFields.name.innerText = fields.name.value;
+      previewFields.type.innerText = fields.type.value;
+      previewFields.strips.innerText = fields.strips.value || "N/A";
+      previewFields.original.innerText = fields.originalPrice.value;
+      previewFields.selling.innerText = fields.sellingPrice.value;
+      previewFields.category.innerText = fields.category.value;
+      previewFields.expiry.innerText = fields.expiryDate.value;
+
+      // Check expiry
+      const expiry = new Date(fields.expiryDate.value);
+      const today = new Date();
+      if (expiry < today) {
+        expiryWarning.textContent = "⚠️ This medicine is expired!";
+        expiryWarning.style.color = "red";
+        previewFields.status.innerText = "❌ Expired";
+        previewFields.status.style.color = "red";
+      } else {
+        expiryWarning.textContent = "✅ This medicine is valid.";
+        expiryWarning.style.color = "lightgreen";
+        previewFields.status.innerText = "✔ Valid";
+        previewFields.status.style.color = "lightgreen";
+      }
+
+      // Preview image from file
+      const file = fields.imageFile.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          previewFields.image.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+
+      previewCard.classList.add("active");
+    };
+
+    form.addEventListener("input", updatePreview);
+    fields.imageFile.addEventListener("change", updatePreview);
+  </script>
+</body>
+</html>

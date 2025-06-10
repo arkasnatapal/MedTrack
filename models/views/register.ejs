@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MedTrack - Auth</title>
+  <link rel="icon" href="/images/logo.png" type="image/png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="/stylesheets/register.css">
+</head>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const elements = document.querySelectorAll(".visi-animate-2");
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("active");
+          observer.unobserve(entry.target); // Optional: only animate once
+        }
+      });
+    }, {
+      threshold: 0.2
+    });
+
+    elements.forEach(el => observer.observe(el));
+  });
+</script>
+
+<body>
+    <nav class="navbar" id="navbar">
+    <div class="logo">Med<span>Track</span></div>
+    <ul class="nav-links">
+      <li><a href="/dashboard">Dashboard</a></li>
+      <li><a href="/medicine">Add Medicine</a></li>
+      <li><a href="/notifications">Notifications</a></li>
+      <li><a href="/register">Register/Login</a></li>
+    </ul>
+  </nav>
+
+  <div class="auth-container">
+    <div class="left-side ">
+     <div aria-label="Orange and tan hamster running in a metal wheel" role="img" class="wheel-and-hamster">
+	<div class="wheel"></div>
+	<div class="hamster">
+		<div class="hamster__body">
+			<div class="hamster__head">
+				<div class="hamster__ear"></div>
+				<div class="hamster__eye"></div>
+				<div class="hamster__nose"></div>
+			</div>
+			<div class="hamster__limb hamster__limb--fr"></div>
+			<div class="hamster__limb hamster__limb--fl"></div>
+			<div class="hamster__limb hamster__limb--br"></div>
+			<div class="hamster__limb hamster__limb--bl"></div>
+			<div class="hamster__tail"></div>
+		</div>
+	</div>
+	<div class="spoke"></div>
+</div>
+    </div>
+    <div class="right-side visi-animate-2">
+      <div class="form-toggle">
+        <button id="loginBtn" class="toggle-btn active">Login</button>
+        <button id="signupBtn" class="toggle-btn">Signup</button>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <form id="loginForm" class="auth-form">
+        <h2>Welcome Back</h2>
+        <input type="email" placeholder="Email" required />
+        <input type="password" placeholder="Password" required />
+        <button type="submit">Login</button>
+        <p class="or-text">or sign in with</p>
+        <div class="social-icons">
+          <i class="fab fa-google"></i>
+          <i class="fab fa-facebook"></i>
+          <i class="fab fa-twitter"></i>
+        </div>
+      </form>
+
+      <!-- SIGNUP FORM -->
+      <form id="signupForm" class="auth-form hidden">
+        <h2>Create Account</h2>
+        <input type="text" placeholder="Name" required />
+        <input type="number" placeholder="Age" required />
+        <select required>
+          <option value="" disabled selected>Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+        <input type="email" placeholder="Email" required />
+        <input type="password" placeholder="Password" required />
+        <button type="submit">Sign Up</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const loginBtn = document.getElementById('loginBtn');
+    const signupBtn = document.getElementById('signupBtn');
+    const loginForm = document.getElementById('loginForm');
+    const signupForm = document.getElementById('signupForm');
+
+    loginBtn.onclick = () => {
+      loginForm.classList.remove('hidden');
+      signupForm.classList.add('hidden');
+      loginBtn.classList.add('active');
+      signupBtn.classList.remove('active');
+    };
+
+    signupBtn.onclick = () => {
+      signupForm.classList.remove('hidden');
+      loginForm.classList.add('hidden');
+      signupBtn.classList.add('active');
+      loginBtn.classList.remove('active');
+    };
+  </script>
+</body>
+</html>

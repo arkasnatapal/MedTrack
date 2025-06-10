@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedTrack</title>
+    <link rel="stylesheet" href="/stylesheets/index.css">
+    <link rel="icon" href="/images/logo.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kode+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const elements = document.querySelectorAll(".scroll-animate, .scroll-image, .scroll-animate2p, .scroll-animate2h, .scroll-animate2h2, .spin-animate, .scroll-animate-left, .scroll-animate-right");
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("active");
+          observer.unobserve(entry.target); // Optional: only animate once
+        }
+      });
+    }, {
+      threshold: 0.2
+    });
+
+    elements.forEach(el => observer.observe(el));
+  });
+</script>
+
+
+<body>
+    <!-- Animated Ball Background -->
+  <div class="background">
+    <div class="ball glow"></div>
+    <div class="ball move"></div>
+    <div class="ball glow move"></div>
+    <div class="ball glow"></div>
+    <div class="ball move"></div>
+  </div>
+  
+  <nav class="navbar" id="navbar">
+    <div class="logo">Med<span>Track</span></div>
+    <ul class="nav-links">
+      <li><a href="/dashboard">Dashboard</a></li>
+      <li><a href="/medicine">Add Medicine</a></li>
+      <li><a href="/notifications">Notifications</a></li>
+      <li><a href="/register">Register/Login</a></li>
+    </ul>
+  </nav>
+
+  <main class="hero">
+    <div class="circle-left "></div>
+    <h1 class="fade-in">Welcome to <span class="highlight">MedTrack</span></h1>
+    <div class="circle-right rotate"></div>
+  </main>
+
+    <!-- Section 1 -->
+  <section id="home" class="section">
+    <div class="left">
+      <img src="/images/logo.png" alt="" class="glow-img scroll-image">
+    </div>
+    <div class="right">
+        <p class="scroll-animate"><span>MedTrack</span> is a smart platform designed to help individuals and communities manage their unused medicines. It allows users to track medicine expiry dates, get notified before they expire, and donate unused medicines to people in need. By reducing medical waste and encouraging responsible sharing, it promotes a healthier, more sustainable world — one medicine at a time.</p>
+    </div>
+    </div>
+  </section>
+
+  <!-- section-2 -->
+
+  <section id="join" class="section">
+    <div class="left">
+      <h2 class="scroll-animate2h">Why Waiting?</h2>
+      <p class="scroll-animate2p">Sign up to MedTrack and unlock exclusive features — get personalized expiry alerts, track your medicines easily, and receive special offers and discounts on essential medicines. By joining, you’re not only managing your health smarter but also contributing to a community that believes in reducing waste and saving lives. Start your journey with MedTrack now — it’s free and impactful!</p>
+        
+      <button class="cssbuttons-io-button scroll-animate2h2" >
+  Get started
+
+  <div class="icon">
+      <a href="/register">
+    <svg
+      height="24"
+      width="24"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+
+      <path d="M0 0h24v24H0z" fill="none"></path>
+      <path
+        d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
+        fill="currentColor"
+      ></path>
+    </svg>
+    </a>
+  </div>
+</button>
+
+    </div>
+    <div class="right spin-animate">
+     <div class="content">
+  <div class="pill">
+    <div class="medicine">
+      <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i
+      ><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+    </div>
+    <div class="side"></div>
+    <div class="side"></div>
+  </div>
+</div>
+    </div>
+  </section>
+
+  <!-- Section 4: Founders -->
+  <section id="founders" class="section">
+    <h2 class="scroll-animate2h2">Meet the Creators</h2>
+    <div class="founders">
+      <div class="person scroll-animate-left">
+        <img src="/images/arka.jpg" alt="Founder 1"/>
+        <h3>Arkasnata Pal</h3>
+        <p>Frontend and Backend</p>
+      </div>
+      <div class="person scroll-animate-right">
+        <img src="/images/aryan.jpg" alt="Founder 2"/>
+        <h3>Aryan Roy</h3>
+        <p>Designer and AI</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 MedTrack. All rights reserved.</p>
+  </footer>
+
+ <!-- for the scrolling navbar -->
+  <script>
+  let prevScroll = window.scrollY;
+  const navbar = document.getElementById("navbar");
+
+  window.addEventListener("scroll", () => {
+    let currentScroll = window.scrollY;
+    
+    if (currentScroll <= 10) {
+      navbar.style.top = "0";
+    } else if (prevScroll > currentScroll) {
+      navbar.style.top = "0";
+    } else {
+      navbar.style.top = "-100px";
+    }
+    
+    prevScroll = currentScroll;
+  });
+</script>
+  </body>
+</html>
